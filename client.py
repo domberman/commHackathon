@@ -17,6 +17,7 @@ print("Client started, listening for offer requests...")
 while True:
     try:
         data = sockUDP.recvfrom(BUFFER_SIZE)    #receive offer
+        print("a")
     except ConnectionResetError:
         print("unable to receive offer")
         continue
