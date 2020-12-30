@@ -11,7 +11,7 @@ def send_offers(sock, port):     #for sending the offers through UDP
     while True:
         if lock.locked():   #continue sending until 10 seconds have passed, then the lock will lock and func will end
             return
-        sock.sendto(struct.pack("Ibh",0xfeedbeef, 0x02, port), ("localhost", 13117))
+        sock.sendto(struct.pack("Ibh",0xfeedbeef, 0x02, port), ("172.1.255.255", 13117))
         time.sleep(1.0)
 
 def count_keystrokes(conn, addr, names1, names2, score, num_of_teams):  #the function that handle each client
@@ -55,9 +55,11 @@ def count_to_ten(): #for signaling when to start and finish the game
         lock.acquire()
         print("starting game!")
 
-my_ip = "localhost"
+my_ip = get_if_addr('eth1')
 BUFFER_SIZE = 1024
 sock_udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock_udp.setsockopt(SOL_SOCKET, SO_REUSEPORT, 1)
+sock_udp.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 UDP_PORT = 2000
 TCP_PORT = 2002
 sock_udp.bind((my_ip, UDP_PORT))

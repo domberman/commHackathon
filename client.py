@@ -3,12 +3,14 @@ import getch
 import struct
 import select
 
-myIP = "localhost"
+myIP = get_if_addr('eth1')
 MY_PORT = 13117
 MAGIC_COOKIE = 0xfeedbeef
 BUFFER_SIZE = 1024
 TEAM_NAME = '"DROP TABLE teamNames; --'
 sockUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sockUDP.setsockopt(SOL_SOCKET, SO_REUSEPORT, 1)
+sockUDP.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 sockUDP.bind((myIP, MY_PORT))
 print("Client started, listening for offer requests...")
 while True:
