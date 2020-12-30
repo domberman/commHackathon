@@ -11,7 +11,7 @@ def send_offers(sock, port):     #for sending the offers through UDP
     while True:
         if lock.locked():   #continue sending until 10 seconds have passed, then the lock will lock and func will end
             return
-        sock.sendto(struct.pack("Ibh",0xfeedbeef, 0x02, port), ("172.1.255.255", 13117))
+        sock.sendto(struct.pack("!Ibh",0xfeedbeef, 0x02, port), ("172.1.255.255", 13117))
         time.sleep(1.0)
 
 def count_keystrokes(conn, addr, names1, names2, score, num_of_teams):  #the function that handle each client

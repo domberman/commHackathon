@@ -20,7 +20,7 @@ while True:
     except ConnectionResetError:
         print("unable to receive offer")
         continue
-    message_cookie, message_type, message_port = struct.unpack("Ibh", data[0])
+    message_cookie, message_type, message_port = struct.unpack("!Ibh", data[0])
     server_addr = data[1][0]
     print(f"{server_addr}, {message_port}")
     if message_cookie == MAGIC_COOKIE and message_type == 0x2:  #check offer
