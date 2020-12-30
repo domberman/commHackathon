@@ -2,6 +2,7 @@ import socket
 import getch
 import struct
 import select
+from scapy.all import get_if_addr
 
 myIP = get_if_addr('eth1')
 MY_PORT = 13117
