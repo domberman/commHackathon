@@ -10,7 +10,7 @@ lock = threading.Lock() #global lock, used for communicating between threads (wh
 
 def send_offers(sock, port):     #for sending the offers through UDP
     CLIENT_PORT = 13117
-    adds = get_if_addr('eth1').split(.)
+    adds = get_if_addr('eth1').split(".")
     SEND_UDP_TO = adds[0] + "." + adds[1] + ".255.255"
     while True:
         if lock.locked():   #continue sending until 10 seconds have passed, then the lock will lock and func will end
@@ -62,8 +62,8 @@ def count_to_ten(): #for signaling when to start and finish the game
 my_ip = get_if_addr('eth1')
 BUFFER_SIZE = 1024
 sock_udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-udp_port.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-udp_port.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+sock_udp.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+sock_udp.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 udp_port = 0
 tcp_port = 0
 sock_udp.bind((my_ip, udp_port))
