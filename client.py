@@ -2,14 +2,17 @@ import socket
 import getch
 import struct
 import select
+from scapy.all import get_if_addr
 
-myIP = "localhost"
+myIP = get_if_addr('eth1')
 MY_PORT = 13117
-TCP_PORT = 3000
 MAGIC_COOKIE = 0xfeedbeef
 BUFFER_SIZE = 1024
 TEAM_NAME = '"DROP TABLE teamNames; --'
+tcp_port = 0
 sockUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+udp_port.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+udp_port.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 sockUDP.bind((myIP, MY_PORT))
 print("Client started, listening for offer requests...")
 while True:
@@ -18,14 +21,15 @@ while True:
     except ConnectionResetError:
         print("unable to receive offer")
         continue
-    message_cookie, message_type, message_port = struct.unpack("!Ibh", data[0])
+    message_cookie, message_type, message_port = struct.unpack("!IbH", data[0])
     server_addr = data[1][0]
     print(f"{server_addr}, {message_port}")
     if message_cookie == MAGIC_COOKIE and message_type == 0x2:  #check offer
         print(f"Received offer from {server_addr}, {message_port} attempting to connect...​")
         try:
             sockTCP = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sockTCP.bind((myIP, TCP_PORT))
+            sockTCP.bind((myIP, tcp_port))
+            tcp_port = sockTCP.getsockname()[1]
             sockTCP.connect((server_addr, message_port))
         except socket.timeout as e:
             print(f"exception occured while trying to connect: {e}")
