@@ -5,6 +5,7 @@ import select
 from scapy.all import get_if_addr
 
 myIP = get_if_addr('eth1')
+print(myIP)
 MY_PORT = 13117
 MAGIC_COOKIE = 0xfeedbeef
 BUFFER_SIZE = 1024
@@ -18,6 +19,7 @@ print("Client started, listening for offer requests...")
 while True:
     try:
         data = sockUDP.recvfrom(BUFFER_SIZE)    #receive offer
+        print("received packet")
     except ConnectionResetError:
         print("unable to receive offer")
         continue
