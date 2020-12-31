@@ -47,7 +47,10 @@ def count_keystrokes(conn, addr, names1, names2, score, num_of_teams):  #the fun
         end_message += "Group 2 wins!"
     else:
         end_message += "It was a tie! Unbelievable!"
-    conn.send(bytes(end_message, "utf8"))
+    try:
+        conn.send(bytes(end_message, "utf8"))
+    except BrokenPipeError:
+        print("a pipe was broken")
     conn.close()
 
 def count_to_ten(): #for signaling when to start and finish the game
