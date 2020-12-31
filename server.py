@@ -10,8 +10,9 @@ lock = threading.Lock() #global lock, used for communicating between threads (wh
 
 def send_offers(sock, port):     #for sending the offers through UDP
     CLIENT_PORT = 13117
+    BROADCAST_ADDR = ".255.255"
     adds = get_if_addr('eth1').split(".")
-    SEND_UDP_TO = adds[0] + "." + adds[1] + ".255.255"
+    SEND_UDP_TO = adds[0] + "." + adds[1] + BROADCAST_ADDR
     while True:
         if lock.locked():   #continue sending until 10 seconds have passed, then the lock will lock and func will end
             return
