@@ -14,7 +14,7 @@ tcp_port = 0
 sockUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sockUDP.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
 sockUDP.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-sockUDP.bind((myIP, MY_PORT))
+sockUDP.bind(("", MY_PORT))
 print("Client started, listening for offer requests...")
 while True:
     try:
