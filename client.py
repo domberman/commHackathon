@@ -11,8 +11,8 @@ BUFFER_SIZE = 1024
 TEAM_NAME = '"DROP TABLE teamNames; --'
 tcp_port = 0
 sockUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-udp_port.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-udp_port.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+sockUDP.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+sockUDP.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 sockUDP.bind((myIP, MY_PORT))
 print("Client started, listening for offer requests...")
 while True:
