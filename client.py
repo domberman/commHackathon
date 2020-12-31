@@ -2,22 +2,19 @@ import socket
 import getch
 import struct
 import select
-from scapy.all import get_if_addr
 
-myIP = get_if_addr('eth1')
+myIP = "localhost"
 MY_PORT = 13117
+TCP_PORT = 3000
 MAGIC_COOKIE = 0xfeedbeef
 BUFFER_SIZE = 1024
 TEAM_NAME = '"DROP TABLE teamNames; --'
 sockUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sockUDP.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-sockUDP.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 sockUDP.bind((myIP, MY_PORT))
 print("Client started, listening for offer requests...")
 while True:
     try:
         data = sockUDP.recvfrom(BUFFER_SIZE)    #receive offer
-        print("a")
     except ConnectionResetError:
         print("unable to receive offer")
         continue
@@ -28,7 +25,7 @@ while True:
         print(f"Received offer from {server_addr}, {message_port} attempting to connect...​")
         try:
             sockTCP = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sockTCP.bind((myIP, 3000))
+            sockTCP.bind((myIP, TCP_PORT))
             sockTCP.connect((server_addr, message_port))
         except socket.timeout as e:
             print(f"exception occured while trying to connect: {e}")
